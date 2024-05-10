@@ -1,0 +1,620 @@
+/* Custom styles */
+body {
+    background-color: #f2f2f2; /* Blue background */
+    font-family: Arial, sans-serif;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #003366; /* Dark blue form background */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    color: #fff; /* White text */
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ccc; /* Light gray text */
+    text-align: left;
+}
+
+.sign-out-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+}
+
+.sign-out-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 1px 2px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 2px 2px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+.sign-out-button:hover {
+    background-color: #ea79b9;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.options {
+    margin-top: 20px;
+}
+
+.options a {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.options a:hover {
+    text-decoration: underline;
+}
+
+.options button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.options button:hover {
+    background-color: #c82333;
+}
+
+/* Common styles */
+.account-container {
+    color: #007bff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    background-color: #f0f0f0; /* Light grey background for visibility */
+}
+
+.account-container span {
+    font-size: 16px;
+}
+
+#accountName {
+    font-weight: bold;
+    margin-left: 5px; /* Gives a little space between 'Welcome,' and the user's email */
+}
+
+.interactive-header {
+    font-family: 'Roboto', sans-serif;
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 4px rgba(52, 152, 219, 0.3);
+}
+
+.interactive-header span {
+    color: #FFD700; /* Yellow color */
+}
+
+.interactive-header:hover {
+    color: #1e90ff; /* Blue color */
+}
+
+
+/* Form container styles */
+.form-container {
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.10); /* Transparent white background */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+label[for="location1"] {
+    color: #fa2a2a;
+    font-weight: bold;
+}
+
+/* Outlined text field styles */
+input[type="text"] {
+    width: calc(100% - 22px);
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Placeholder styles */
+::placeholder {
+    color: #999;
+}
+
+/* Map container styles */
+.map-container {
+    flex-basis: 100%;
+    height: 300px;
+    margin-top: 20px;
+    border: 2px solid #4f4b4b;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* Transportation buttons container styles */
+.transportation-buttons {
+    display: flex;
+    align-content: center;
+    align-items: baseline;
+    justify-content: space-evenly;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+
+.transportation-button {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 12px; /* Equal distance between buttons */
+    padding: 10px 20px; /* Adjust padding as needed */
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    outline: none;
+}
+
+
+/* Hover effect to change icon color */
+.transportation-button:hover {
+    color: #267bb6;
+    transform: translateY(-2px);
+}
+
+/* Define the keyframes for the animation */
+@keyframes shadow-animation {
+    0% {
+        box-shadow: 0 12px 24px rgba(252, 251, 251, 0.6);
+    }
+    50% {
+        box-shadow: 0 16px 32px rgba(145, 145, 145, 0.8); /* Adjusted shadow values */
+    }
+    100% {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+    }
+}
+
+/* Apply the animation to the selected button */
+.transportation-button.selected {
+    color: #267bb6;
+    transform: translateY(-2px);
+    animation: shadow-animation 4s infinite;/* Adjusted animation duration */
+}
+
+/* @keyframes blink {
+    0% { background-color: lightblue; }
+  50% { background-color: darkblue; }
+  }
+
+  .transportation-button .fas.fa-car {
+    transition: color 0.5s; /* Smooth transition for color change */
+  /* } */
+
+  /* .transportation-button.selected .fas.fa-car {
+    animation: color-change 1s infinite alternate; */
+  /* } */
+  
+ 
+.small-button {
+    padding: 5px 10px; /* Adjust padding as needed */
+    font-size: 14px; /* Adjust font size as needed */
+}
+
+
+
+/* Result container styles */
+.result-container {
+    flex-basis: 100%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    align-content: center;
+    align-items: baseline;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+/* Additional style for individual result values if needed */
+.result-value {
+    display: block;
+}
+
+/* Expected Fare input and button styles */
+#expected-fare {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 10px;
+    width: 60%;
+}
+
+#find-driver-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: #fff;
+    border: 1px solid #3498db;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+#find-driver-button:hover {
+    background-color: #267bb6;
+}
+
+/* Text animation */
+@keyframes textAnimation {
+    0% { color: #4CAF50; }
+    50% { color: #FFC107; }
+    100% { color: #4CAF50; }
+}
+
+/* Additional styles */
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+#map {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.output-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.output-box table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.output-box th, .output-box td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.message-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.message-header {
+    margin-bottom: 15px;
+}
+
+
+.fare-details-container {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #4946f4;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.fare-details-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cancel-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff4545; /* Red */
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px #CC3636; /* Darker red for the shadow */
+    position: relative;
+    top: 0;
+    transition: top ease 0.3s, box-shadow ease 0.3s;
+}
+
+.cancel-button:hover {
+    top: -2px;
+    box-shadow: 0 6px #CC3636;
+}
+
+.cancel-button:active {
+    top: 2px;
+    box-shadow: 0 2px #CC3636;
+}
+
+.confirm-button, .remove-button {
+    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    top: 0;
+    transition: top ease 0.3s, box-shadow ease 0.3s;
+    margin-right: 5px; /* Adds space between the buttons */
+}
+
+.confirm-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    box-shadow: 0 4px #2C7F3B;
+}
+
+.remove-button {
+    background-color: #f44336; /* Red */
+    color: white;
+    box-shadow: 0 4px #D32F2F;
+}
+
+.confirm-button:hover, .remove-button:hover {
+    top: -2px;
+    box-shadow: 0 6px #2C7F3B;
+}
+
+.confirm-button:active, .remove-button:active {
+    top: 2px;
+    box-shadow: 0 2px #2C7F3B;
+}
+
+.confirmation-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.confirm-message {
+font-weight: bold;
+color: blue;
+}
+
+.data-property {
+margin-top: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  h1{
+    color:white;
+    text-shadow: 2px 2px 4px #000000;
+  }
+  .container {
+    width: 100%;
+    margin: auto;
+  }
+  
+  .navbar {
+    width: 100%;
+  }
+  
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 62px;
+    background-image: linear-gradient(to right, #9E768F , #9FA4C4);
+    z-index: 1; 
+
+  }
+  
+  .navbar .menu-items {
+    display: flex;
+  }
+  
+  .navbar .nav-container li {
+    list-style: none;
+  }
+  
+  .navbar .nav-container a {
+    text-decoration: none;
+    color: #0e2431;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    padding: 0.7rem;
+     
+  }
+  
+  .navbar .nav-container a:hover{
+     color: purple;
+  }
+  
+  .nav-container {
+    display: block;
+    position: relative;
+    height: 60px;
+  }
+  
+  /* Making the hamburger */
+  .nav-container .checkbox {
+    position: absolute;
+    display: block;
+    height: 32px;
+    width: 32px;
+    top: 20px;
+    left: 20px;
+    z-index: 5;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .nav-container .hamburger-lines {
+    display: block;
+    height: 28px;
+    width: 34px;
+    position: absolute;
+    top: 17px;
+    left: 20px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .nav-container .hamburger-lines .bar {
+    display: block;
+    height: 4px;
+    width: 100%;
+    border-radius: 10px;
+    background: #0e2431;
+  }
+  
+  /* Adding transitions  */
+  .nav-container .hamburger-lines .bar1 {
+    transform-origin: 0% 0%;
+    transition: transform 0.4s ease-in-out;
+  }
+  
+  .nav-container .hamburger-lines .bar2 {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .nav-container .hamburger-lines .bar3 {
+    transform-origin: 0% 100%;
+    transition: transform 0.4s ease-in-out;
+  }
+  
+  .navbar .menu-items {
+    padding-top: 120px;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the last value (0.5) for the opacity */
+    backdrop-filter: blur(5px); 
+    height: 100vh;
+    width: 50%;
+    transform: translate(-150%);
+    display: flex;
+    flex-direction: column;
+    margin-left: -40px;
+    padding-left: 50px;
+    transition: transform 0.5s ease-in-out;
+    text-align: center;
+  }
+  
+  .navbar .menu-items li {
+    margin-bottom: 1.2rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  
+  .logo {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    font-size: 1.2rem;
+    color: #0e2431;
+  }
+  
+  /* Controlling the state of the icon */
+  .nav-container input[type="checkbox"]:checked ~ .menu-items {
+    transform: translateX(0);
+  }
+  
+  .nav-container input[type="checkbox"]:checked ~ .hamburger-lines .bar1 {
+    transform: rotate(45deg);
+  }
+  
+  .nav-container input[type="checkbox"]:checked ~ .hamburger-lines .bar2 {
+    transform: scaleY(0);
+  }
+  
+  .nav-container input[type="checkbox"]:checked ~ .hamburger-lines .bar3 {
+    transform: rotate(-45deg);
+  }
+  
+  .nav-container input[type="checkbox"]:checked ~ .logo{
+    display: none;
+  }
+  

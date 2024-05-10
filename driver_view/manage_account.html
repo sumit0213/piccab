@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drivers Page</title>
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Include your custom styles -->
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+        }
+
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            border-radius: 5px;
+        }
+
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 5px;
+        }
+
+        .container .user-details {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #edf4ed;
+            border: 1px solid #c9f4c1;
+            border-radius: 5px;
+        }
+
+        .container .user-details p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+
+        .container .user-details p span {
+            font-weight: bold;
+            margin-left: 10px;
+            font-weight: normal;
+        }
+
+        .container .user-details p:last-child {
+            margin-bottom: 0;
+        }
+
+        .btn-back {
+            background-color: #37b129;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .btn-back i {
+            margin-right: 5px;
+        }
+
+        .cab-details {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #edf4ed;
+            border: 1px solid #c9f4c1;
+            border-radius: 5px;
+        }
+
+        .cab-details p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+
+        .cab-details span {
+            margin-left: 10px;
+            font-weight: normal;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div class="container">
+        <div>    <button class="btn-back" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+        <h1>Driver Profile</h1>
+    </div>
+    <header class="header">
+        <!-- Header content here -->
+    </header>
+
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'user-details')" id="defaultOpen">User Details</button>
+        <button class="tablinks" onclick="openTab(event, 'cab-details')">Cab Details</button>
+    </div>
+
+    <div id="user-details" class="tabcontent">
+        <h3>User Details</h3>
+        <div class="user-details" id="userDetails">
+            <p><span>Name:</span> <span id="userName"></span></p>
+            <p><span>Phone:</span> <span id="userPhone"></span></p>
+            <p><span>Email:</span> <span id="userEmail"></span></p>
+            <p><span>Gender:</span> <span id="userGender"></span></p>
+            <p><span>Address:</span> <span id="userAddress"></span></p>
+            <p><span>City:</span> <span id="userCity"></span></p>
+            <p><span>State:</span> <span id="userState"></span></p>
+            <p><span>Zip:</span> <span id="userZip"></span></p>
+            <!-- <p><span>User ID:</span> <span id="userId"></span></p> -->
+        </div>
+    </div>
+
+    <div id="cab-details" class="tabcontent">
+        <h3>Cab Details</h3>
+        <div id="cabDetails">
+            <!-- Cab details will be displayed here -->
+        </div>
+    </div>
+
+
+</div>
+
+<!-- Firebase JavaScript SDK version 8 -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+    // Your Firebase project configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyD_OF-GCSb49quE1Jbs9vA7_cotXjQaPpk",
+        authDomain: "urban-cab-2-96e07.firebaseapp.com",
+        databaseURL: "https://urban-cab-2-96e07-default-rtdb.firebaseio.com",
+        projectId: "urban-cab-2-96e07",
+        storageBucket: "urban-cab-2-96e07.appspot.com",
+        messagingSenderId: "655633876241",
+        appId: "1:655633876241:web:e0db94634c06e34dcef8b0",
+        measurementId: "G-CW48Z88FY3"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Reference to the Firebase Realtime Database
+    const database = firebase.database();
+
+    // Function to get email from local storage
+    function getEmailFromLocalStorage() {
+        return localStorage.getItem('username');
+    }
+
+    // Function to fetch user details from database
+    function fetchUserDetails(email) {
+        const userDetailsRef = database.ref(`Account_Driver_detail/${email.replace(".", ",")}`);
+        userDetailsRef.once('value', (snapshot) => {
+            const userDetails = snapshot.val();
+            if (userDetails) {
+                displayUserDetails(userDetails);
+            } else {
+                console.log('User details not found');
+            }
+        });
+    }
+
+    // Function to display user details on the screen
+function displayUserDetails(userDetails) {
+    const userDetailsContainer = document.getElementById('userDetails');
+    userDetailsContainer.innerHTML = ''; // Clear previous content
+
+    const details = [
+        { label: 'Name:', value: userDetails.name || 'N/A' },
+        { label: 'Phone:', value: userDetails.phone || 'N/A' },
+        { label: 'Email:', value: userDetails.email || 'N/A' },
+        { label: 'Gender:', value: userDetails.gender || 'N/A' },
+        { label: 'Address:', value: userDetails.address || 'N/A' },
+        { label: 'City:', value: userDetails.city || 'N/A' },
+        { label: 'State:', value: userDetails.state || 'N/A' },
+        { label: 'Zip:', value: userDetails.zip || 'N/A' }
+    ];
+
+    details.forEach(detail => {
+        const p = document.createElement('p');
+        const labelSpan = document.createElement('span');
+        labelSpan.style.fontWeight = 'bold'; // Make the label bold
+        labelSpan.textContent = detail.label;
+        const valueSpan = document.createElement('span');
+        valueSpan.textContent = detail.value;
+        p.appendChild(labelSpan);
+        p.appendChild(valueSpan);
+        userDetailsContainer.appendChild(p);
+    });
+}
+
+
+    // Function to go back to previous page
+    function goBack() {
+        window.history.back();
+    }
+
+    // Main function to fetch user details and display them
+    function main() {
+        const email = getEmailFromLocalStorage();
+        if (email) {
+            fetchUserDetails(email);
+        } else {
+            console.log('Email not found in local storage');
+        }
+    }
+
+    // Call main function when page loads
+    window.onload = function() {
+        main();
+        populateCabDetails(); // Call populateCabDetails function
+    };
+
+    // JavaScript to handle tab switching
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Function to populate cab details from database
+function populateCabDetails() {
+    const email = getEmailFromLocalStorage();
+    if (email) {
+        const cabDetailsRef = database.ref(`Account_Driver_detail/${email.replace(".", ",")}/cabdetail`);
+        cabDetailsRef.once('value', (snapshot) => {
+            const cabDetails = snapshot.val();
+            if (cabDetails) {
+                displayCabDetails(cabDetails);
+            } else {
+                console.log('Cab details not found');
+            }
+        });
+    } else {
+        console.log('Email not found in local storage');
+    }
+}
+
+
+    // Function to display cab details
+   // Function to display cab details on the screen
+// Function to display cab details on the screen
+function displayCabDetails(cabDetails) {
+    const cabDetailsContainer = document.getElementById('cab-details');
+    cabDetailsContainer.innerHTML = ''; // Clear previous content
+
+    const cabDetailsDiv = document.createElement('div');
+    cabDetailsDiv.classList.add('cab-details');
+
+    const details = [
+        { label: 'Registration Number:', value: cabDetails.registrationNumber || 'N/A' },
+        { label: 'Cab Model:', value: cabDetails.cabModel || 'N/A' },
+        { label: 'Cab Colour:', value: cabDetails.cabColour || 'N/A' },
+        { label: 'Car Owner Name:', value: cabDetails.ownerName || 'N/A' },
+        { label: 'Car Owner Number:', value: cabDetails.ownerNumber || 'N/A' },
+        { label: 'Vehicle Type:', value: cabDetails.vehicleType || 'N/A' }
+    ];
+
+    details.forEach(detail => {
+        const p = document.createElement('p');
+        const labelSpan = document.createElement('span');
+        labelSpan.style.fontWeight = 'bold'; // Make the label bold
+        labelSpan.textContent = detail.label;
+        const valueSpan = document.createElement('span');
+        valueSpan.textContent = detail.value;
+        p.appendChild(labelSpan);
+        p.appendChild(valueSpan);
+        cabDetailsDiv.appendChild(p);
+    });
+
+    cabDetailsContainer.appendChild(cabDetailsDiv);
+}
+
+</script>
+
+</body>
+</html>

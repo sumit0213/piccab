@@ -1,0 +1,17 @@
+body {
+    background-color: #eaeaea;
+  }
+  
+  img.avatar {
+    border: 1px solid #eee;
+  }
+  
+  .only-bottom-margin {
+    margin-top: 0px;
+  }
+  
+  .activity-mini {
+    padding-right: 15px;
+    float: left;
+  }
+  

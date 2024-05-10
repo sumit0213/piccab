@@ -1,0 +1,32 @@
+<!-- drivers_account_details.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Account Details</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include your styles here -->
+</head>
+<body>
+    <div class="account-details">
+        <h2>Driver Account Details</h2>
+        <form id="accountForm">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" required></textarea>
+            <label for="phoneNumbers">Phone Numbers:</label>
+            <div id="phoneNumbersContainer">
+                <input type="tel" class="phoneNumber" name="phoneNumber" required>
+            </div>
+            <button type="button" id="addPhoneNumber">Add Phone Number</button>
+            <label for="photo">Upload Photo:</label>
+            <input type="file" id="photo" name="photo">
+            <button type="submit">Update Details</button>
+        </form>
+    </div>
+</body>
+</html>

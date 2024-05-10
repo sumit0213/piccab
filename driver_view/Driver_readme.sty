@@ -1,0 +1,42 @@
+list with a brief description for each function:
+
+•	initMap:
+Initializes the Google Maps interface and handles geolocation to display the user's current location on the map.
+
+•	saveLocationToFirebase:
+Saves the user's location data to Firebase database including latitude, longitude, formatted address, and timestamp.
+
+•	calculateDistance:
+Calculates the distance between two geographical coordinates using the Haversine formula.
+deg2rad:Converts degrees to radians, used in the calculateDistance function.
+
+•	getUserLocation:
+Returns a promise to obtain the user's current geolocation.
+
+•	acceptRide:
+Handles the action of accepting a ride request by displaying an input field for expected fare and a confirmation button.
+
+
+•	declineRide:
+Handles the action of declining a ride request by removing the corresponding ride item.
+
+•	confirmFare:
+Confirms the expected fare for a ride and updates it in Firebase.
+
+•	getRide:
+Retrieves ride details from Firebase, calculates distances, and displays available rides along with options to accept or decline.
+
+•	displayNoDriversMessage:
+Displays a message when no drivers are available in the user's area.
+
+•	toggleRide:
+Toggles the ride feature on/off, enabling/disabling the desired location input field and setting intervals for continuous ride retrieval.
+
+•	clearRideDetails:
+Clears the ride details list from the DOM.
+
+•	resetDesiredLocation:
+Resets the value of the desired location input field.
+
+•	startTimer:
+Initiates a countdown timer for a specified duration, updating the timer display and removing the ride item when the timer expires.

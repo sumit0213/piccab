@@ -1,0 +1,440 @@
+/* Custom styles */
+body {
+    background-color: #f2f2f2; /* Blue background */
+    font-family: Arial, sans-serif;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #003366; /* Dark blue form background */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    color: #fff; /* White text */
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ccc; /* Light gray text */
+    text-align: left;
+}
+
+.sign-out-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+}
+
+.sign-out-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.sign-out-button:hover {
+    background-color: #ea79b9;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.options {
+    margin-top: 20px;
+}
+
+.options a {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.options a:hover {
+    text-decoration: underline;
+}
+
+.options button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.options button:hover {
+    background-color: #c82333;
+}
+
+/* Common styles */
+.account-container {
+    color: #007bff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    background-color: #f0f0f0; /* Light grey background for visibility */
+}
+
+.account-container span {
+    font-size: 16px;
+}
+
+#accountName {
+    font-weight: bold;
+    margin-left: 5px; /* Gives a little space between 'Welcome,' and the user's email */
+}
+
+.interactive-header {
+    font-family: 'Roboto', sans-serif;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(52, 152, 219, 0.3);
+}
+
+.interactive-header span {
+    color: #FFD700; /* Yellow color */
+}
+
+.interactive-header:hover {
+    color: #1e90ff; /* Blue color */
+}
+
+
+/* Form container styles */
+.form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.10); /* Transparent white background */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+label[for="location1"] {
+    color: #fa2a2a;
+    font-weight: bold;
+}
+
+
+/* Location input styles */
+label {
+    flex-basis: 100%;
+    margin-bottom: 1px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Outlined text field styles */
+input[type="text"] {
+    width: calc(100% - 22px);
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Placeholder styles */
+::placeholder {
+    color: #999;
+}
+
+/* Map container styles */
+.map-container {
+    flex-basis: 100%;
+    height: 300px;
+    margin-top: 20px;
+    border: 2px solid #4f4b4b;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* Transportation buttons container styles */
+.transportation-buttons {
+    display: flex;
+    align-content: center;
+    align-items: baseline;
+    justify-content: space-evenly;
+}
+
+/* Transportation button styles */
+.transportation-buttons {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.transportation-button {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 12px; /* Equal distance between buttons */
+    padding: 10px 20px; /* Adjust padding as needed */
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+
+/* Hover effect to change icon color */
+.transportation-button:hover {
+    color: #267bb6;
+    transform: translateY(-2px);
+}
+
+/* Define the keyframes for the animation */
+@keyframes shadow-animation {
+    0% {
+        box-shadow: 0 12px 24px rgba(252, 251, 251, 0.6);
+    }
+    50% {
+        box-shadow: 0 16px 32px rgba(145, 145, 145, 0.8); /* Adjusted shadow values */
+    }
+    100% {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+    }
+}
+
+/* Apply the animation to the selected button */
+.transportation-button.selected {
+    color: #267bb6;
+    transform: translateY(-2px);
+    animation: shadow-animation 4s infinite; /* Adjusted animation duration */
+}
+
+
+
+/* Result container styles */
+.result-container {
+    flex-basis: 100%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    align-content: center;
+    align-items: baseline;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+/* Additional style for individual result values if needed */
+.result-value {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Expected Fare input and button styles */
+#expected-fare {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 10px;
+    width: 60%;
+}
+
+#find-driver-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: #fff;
+    border: 1px solid #3498db;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+#find-driver-button:hover {
+    background-color: #267bb6;
+}
+
+/* Text animation */
+@keyframes textAnimation {
+    0% { color: #4CAF50; }
+    50% { color: #FFC107; }
+    100% { color: #4CAF50; }
+}
+
+/* Additional styles */
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+#map {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.output-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.output-box table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.output-box th, .output-box td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.message-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.message-header {
+    margin-bottom: 15px;
+}
+
+.fare-details-container {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #4946f4;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.fare-details-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+.cancel-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff4545; /* Red */
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px #CC3636; /* Darker red for the shadow */
+    position: relative;
+    top: 0;
+    transition: top ease 0.3s, box-shadow ease 0.3s;
+}
+
+.cancel-button:hover {
+    top: -2px;
+    box-shadow: 0 6px #CC3636;
+}
+
+.cancel-button:active {
+    top: 2px;
+    box-shadow: 0 2px #CC3636;
+}
+
+.confirm-button, .remove-button {
+    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    top: 0;
+    transition: top ease 0.3s, box-shadow ease 0.3s;
+    margin-right: 5px; /* Adds space between the buttons */
+}
+
+.confirm-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    box-shadow: 0 4px #2C7F3B;
+}
+
+.remove-button {
+    background-color: #f44336; /* Red */
+    color: white;
+    box-shadow: 0 4px #D32F2F;
+}
+
+.confirm-button:hover, .remove-button:hover {
+    top: -2px;
+    box-shadow: 0 6px #2C7F3B;
+}
+
+.confirm-button:active, .remove-button:active {
+    top: 2px;
+    box-shadow: 0 2px #2C7F3B;
+}

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fare Confirmation</title>
+</head>
+<body>
+    <h1>Fare Confirmation</h1>
+    <div id="fareAddress"></div>
+    <script>
+        // Retrieve the fare address from localStorage and display it
+        document.getElementById('fareAddress').innerText = 'Address: ' + localStorage.getItem('fareAddress');
+    </script>
+</body>
+</html>

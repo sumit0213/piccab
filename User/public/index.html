@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Proximity Checker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+        <!-- Sign-out button -->
+        <div class="sign-out-container">
+            <button class="sign-out-button" onclick="signOut()">Sign Out</button>
+        </div>
+    </div>
+    
+
+   <h1 class="interactive-header">Urban <span>Ride</span></h1>
+
+      
+
+    <!-- Form container with blue background -->
+    <div class="form-container" style="background-color: #fff;">
+        <label for="location1" style="color: #000000; font-weight: bold;">Current Location:</label>
+        <i class='fas fa-map-marker-alt' style='font-size:24px;color:#3498db'></i>
+        <input type="text" id="location1" placeholder="Type location..." autocomplete="off">
+        
+        <label for="location2" style="color: #000000; font-weight: bold;">Enter Second Location:</label>
+        <i class='fas fa-male' style='font-size:24px;color:#3498db'></i>
+        <input type="text" id="location2" placeholder="Type location..." autocomplete="off">
+    
+        <div class="transportation-buttons">
+            <button class="transportation-button" onclick="calculatePrice('CAR')" data-type="CAR"><i class="fas fa-car"></i> CAR</button>
+            <button class="transportation-button" onclick="calculatePrice('SUV')" data-type="SUV"><i class="fas fa-truck-pickup"></i> SUV</button>
+            <button class="transportation-button" onclick="calculatePrice('BIKE')" data-type="BIKE"><i class="fas fa-motorcycle"></i> BIKE</button>
+            <button class="transportation-button" onclick="calculatePrice('INTER CITY')" data-type="INTER CITY"><i class="fas fa-bus"></i> INTER CITY</button>
+        </div> 
+            
+        <div class="result-container" id="result"></div> 
+        <div><label for="Distance"></label> 
+            <label for="Duration"></label> 
+            <label for="Market Price:"></label> </div>
+    
+        <!-- New input field below transportation buttons -->
+        <div class="input-container">
+            <input type="text" id="expected-fare" placeholder="Enter expected fare..." autocomplete="off">
+            <button id="find-driver-button" onclick="checkExpectedFare()">Find Driver</button>
+        </div>
+        <div class="map-container" id="map"></div>
+    </div>
+    
+
+    <!-- Include Google Maps API script without the callback parameter -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_OF-GCSb49quE1Jbs9vA7_cotXjQaPpk&libraries=places"></script>
+
+    <!-- Call initializeMap after the API script has loaded -->
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeMap();
+        });
+    </script> -->
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>    
+    <script>
+        // Request location permission immediately
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    // Permission granted, proceed with loading the rest of the page
+                    loadPage(position.coords.latitude, position.coords.longitude);
+                },
+                function (error) {
+                    // Permission denied or error handling
+                    handleGeolocationError(error);
+                }
+            );
+        } else {
+            // Geolocation not supported by the browser
+            alert('Error: Your browser doesn\'t support geolocation.');
+        }
+
+        // Function to load the rest of the page
+        function loadPage(latitude, longitude) {
+            // ... Your existing script content ...
+        }
+
+       // Function to sign out the user
+function signOut() {
+    firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+        console.log('User signed out successfully.');
+        // Close the current window/tab and redirect to User_signin.html
+        window.location.href = 'User_signin.html';
+    }).catch(function(error) {
+        // An error happened.
+        console.error('An error occurred while signing out:', error);
+    });
+}
+    </script>
+    <script src="script.js"></script>
+    <script src="firebase-config.js"></script>
+
+</body>
+</html>

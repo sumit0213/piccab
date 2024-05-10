@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Sign Up</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Add your custom styles here */
+        .signup-container {
+            width: 80%;
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .signup-container h2 {
+            margin-bottom: 20px;
+        }
+        .signup-container form label {
+            width: 130px;
+            display: inline-block;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        .signup-container form input[type=text],
+        .signup-container form input[type=email],
+        .signup-container form input[type=password],
+        .signup-container form select,
+        .signup-container form input[type=tel] {
+            width: calc(100% - 140px);
+            margin-bottom: 15px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .signup-container form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .signup-container form button:hover {
+            background-color: #0056b3;
+        }
+        .options {
+            margin-top: 20px;
+        }
+        .options a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .options a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Driver Sign Up</h2>
+        <form id="signupForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <fieldset>
+                <legend>Gender</legend>
+                <input type="radio" id="male" name="gender" value="male"> <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="female"> <label for="female">Female</label>
+            </fieldset>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" placeholder="Enter your address">
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" placeholder="Enter your city">
+
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" placeholder="Enter your state">
+
+            <label for="zip">ZIP:</label>
+            <input type="text" id="zip" name="zip" placeholder="Enter your ZIP code">
+
+            <label for="country">Country:</label>
+            <select id="country" name="country">
+                <option value="us">India</option>
+            </select>
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+
+            <label for="drivingLicense">Driving License:</label>
+            <input type="file" id="drivingLicense" name="drivingLicense" accept="image/*" required>
+
+            <label for="aadharCardNumber">Aadhar Card Number:</label>
+            <input type="text" id="aadharCardNumber" name="aadharCardNumber" placeholder="Enter your Aadhar card number" required>
+
+           
+        
+
+        <!-- Cab Details section -->
+        <div id="cab-details" class="tabcontent">
+            <h3>Cab Details</h3>
+            <div id="cabForm">
+                <label for="vehicleType">Select Vehicle Type:</label>
+                <select id="vehicleType" name="vehicleType">
+                    <option value="CAR">CAR</option>
+                    <option value="SUV">SUV</option>
+                    <!-- <option value="bike">BIKE</option> -->
+                    <option value="AUTO">AUTO</option>
+                </select>
+                <div>
+                    <label for="registrationNumber">Registration Number:</label>
+                    <input type="text" id="registrationNumber" name="registrationNumber">
+                </div>
+                <div>
+                    <label for="cabModel">Cab Model:</label>
+                    <input type="text" id="cabModel" name="cabModel">
+                </div>
+                <div>
+                    <label for="cabColour">Cab Colour:</label>
+                    <input type="text" id="cabColour" name="cabColour">
+                </div>
+                <div>
+                    <label for="ownerName">Car Owner Name:</label>
+                    <input type="text" id="ownerName" name="ownerName">
+                </div>
+                <div>
+                    <label for="ownerNumber">Car Owner Number:</label>
+                    <input type="text" id="ownerNumber" name="ownerNumber">
+                </div>
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+        <!-- End of Cab Details section -->
+
+        <div class="options">
+            <a href="Drivers_login.html">Back to Login</a>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyD_OF-GCSb49quE1Jbs9vA7_cotXjQaPpk",
+            authDomain: "urban-cab-2-96e07.firebaseapp.com",
+            databaseURL: "https://urban-cab-2-96e07-default-rtdb.firebaseio.com",
+            projectId: "urban-cab-2-96e07",
+            storageBucket: "urban-cab-2-96e07.appspot.com",
+            messagingSenderId: "655633876241",
+            appId: "1:655633876241:web:e0db94634c06e34dcef8b0",
+            measurementId: "G-CW48Z88FY3"
+        };
+        
+        // Initialize Firebase using the configuration received from signin_config.js
+        firebase.initializeApp(firebaseConfig);
+      
+        // Reference to the Firebase Realtime Database
+        const database = firebase.database();
+      
+        // Sign up form submission
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault();      
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const zip = document.getElementById('zip').value;
+            const country = document.getElementById('country').value;
+            const phone = document.getElementById('phone').value;
+            const drivingLicenseFile = document.getElementById('drivingLicense').files[0];
+            const aadharCardNumber = document.getElementById('aadharCardNumber').value;
+            
+           
+
+            // Validate Aadhar Card Number format (mock validation)
+            if (!validateAadharCardNumber(aadharCardNumber)) {
+                alert("Please enter a valid Aadhar Card Number.");
+                return;
+            }
+            
+            // Check if the Aadhar Card Number is already registered
+            const userDetailsRef = database.ref(`Account_Driver_detail`);
+            userDetailsRef.once('value', (snapshot) => {
+                const userDetails = snapshot.val();
+                if (userDetails) {
+                    const users = Object.values(userDetails);
+                    const existingUser = users.find(user => user.aadharCardNumber === aadharCardNumber);
+                    if (existingUser) {
+                        alert("Aadhar Card Number already exists in the database!");
+                        return;
+                    }
+                }
+                
+                // Check if the email is already registered
+                firebase.auth().fetchSignInMethodsForEmail(email)
+                .then((providers) => {
+                    if (providers.length > 0) {
+                        alert("Email already exists! Please use a different email.");
+                    } else {
+                        // Email is not registered, proceed with sign up
+                        createUserWithEmailAndPassword(email, password, name, drivingLicenseFile); // Pass name to the function
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error checking email existence:", error);
+                    alert("An error occurred while signing up: " + error.message);
+                });
+            });
+        });
+
+        // Updated handleFileUpload function signature to accept email parameter
+
+        function handleFileUpload(file, email) {
+    const storageRef = firebase.storage().ref();
+    const uploadTask = storageRef.child('drivingLicenses/' + email.replace(".", "_") + '_' + file.name).put(file);
+
+    uploadTask.on('state_changed', 
+        (snapshot) => {
+            // Progress monitoring (optional)
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+        }, 
+        (error) => {
+            // Handle unsuccessful uploads
+            console.error("Error uploading file:", error);
+            alert("An error occurred while uploading file: " + error.message);
+        }, 
+        () => {
+            // Handle successful uploads on complete
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                console.log('File available at', downloadURL);
+                // Once uploaded, save the download URL along with other user details
+                createUserWithEmailAndPassword(email, null, downloadURL); // Call function to save user details
+            });
+        }
+    );
+}
+
+
+// Function to create user with email and password
+        function createUserWithEmailAndPassword(email, password, name,drivingLicenseFile) { // Accept name as parameter
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Sign up successful, now save additional user details
+                const user = userCredential.user;
+                console.log("Sign up successful! User ID:", user.uid);
+                localStorage.setItem('username', email);
+                saveUserDetails(user.uid,null);
+                saveCabDetails(user.uid,null);
+                incrementRegisteredDriverCount(); // Increment driver count
+                 // Call function to handle file upload and pass email
+            handleFileUpload(drivingLicenseFile, email);
+            })
+            .catch((error) => {
+                console.error("Error signing up:", error.message);
+                alert("An error occurred while signing up: " + error.message);
+            });
+        }
+        
+        // Function to save user details to the database
+        function saveUserDetails(userId,drivingLicenseURL) {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const zip = document.getElementById('zip').value;
+            const country = document.getElementById('country').value;
+            const phone = document.getElementById('phone').value;
+            const aadharCardNumber = document.getElementById('aadharCardNumber').value;
+            
+            // Save user details to the database
+            const userDetailsRef = database.ref(`Account_Driver_detail/${email.replace(".", ",")}`);
+            userDetailsRef.set({
+                userId: userId,
+                name: name, // Use the name passed as parameter
+                email: email,
+                gender: gender,
+                address: address,
+                city: city,
+                state: state,
+                zip: zip,
+                country: country,
+                phone: phone,
+                aadharCardNumber: aadharCardNumber,
+                drivingLicenseURL: drivingLicenseURL // Save the download URL
+            }).then(() => {
+                console.log("User details saved successfully.");
+                alert("Sign up successful!");
+                // Store name in local storage
+                localStorage.setItem('user_name', name);
+                // Redirect back to login page
+                window.location.href = "Drivers_login.html"; // Redirect to login page
+            }).catch((error) => {
+                console.error("Error saving user details:", error);
+                alert("An error occurred while saving user details: " + error.message);
+            });
+        }
+       
+        // Function to save cab details to the database
+        function saveCabDetails(userId, drivingLicenseURL) {
+    const email = localStorage.getItem('username');
+
+    const registrationNumber = document.getElementById('registrationNumber').value;
+    const cabModel = document.getElementById('cabModel').value;
+    const cabColour = document.getElementById('cabColour').value;
+    const ownerName = document.getElementById('ownerName').value;
+    const ownerNumber = document.getElementById('ownerNumber').value;
+    const vehicleType = document.getElementById('vehicleType').value; // Get selected vehicle type
+
+    if (email) {
+        const cabDetailsRef = database.ref(`Account_Driver_detail/${email.replace(".", ",")}/cabdetail`);
+        cabDetailsRef.set({
+            registrationNumber: registrationNumber,
+            cabModel: cabModel,
+            cabColour: cabColour,
+            ownerName: ownerName,
+            ownerNumber: ownerNumber,
+            vehicleType: vehicleType, // Include selected vehicle type in the data
+            drivingLicenseURL: drivingLicenseURL // Save the download URL
+        }).then(() => {
+            console.log('Cab details saved successfully');
+        }).catch((error) => {
+            console.error("Error saving cab details:", error);
+            alert("An error occurred while saving cab details: " + error.message);
+        });
+    } else {
+        console.error("Email not found in local storage");
+        alert("Email not found in local storage");
+    }
+}
+
+        // Function to mock validate Aadhar Card Number format
+        function validateAadharCardNumber(aadharCardNumber) {
+            // Mock validation: Check if Aadhar Card Number is 12 digits
+            return /^\d{12}$/.test(aadharCardNumber);
+        }
+        
+        // Function to increment Registered Driver Count
+        function incrementRegisteredDriverCount() {
+            const driverCountRef = database.ref(`Account_Driver_detail/registeredDriverCount`);
+            driverCountRef.transaction((currentCount) => {
+                return (currentCount || 0) + 1;
+            }).then(() => {
+                console.log("Registered Driver Count incremented successfully.");
+            }).catch((error) => {
+                console.error("Error incrementing Registered Driver Count:", error);
+            });
+        }
+    </script>
+
+</body>
+</html>
