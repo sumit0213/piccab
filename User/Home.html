@@ -30,7 +30,7 @@
                     <li><a href="#">About</a></li>
                     <li><a href="#">Topics</a></li>
                     <li><a href="#">Ride History</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#" id="contactButton">Contact</a></li>
                     <li><a href="#" id="manageAccountBtn">Manage Account</a></li>
                     <li><a href="#" id="signOutBtn" onclick="signOut()">Sign Out</a></li>
                 </div>
@@ -133,6 +133,14 @@
         // Function to handle button click event
 document.getElementById('manageAccountBtn').addEventListener('click', () => {
     window.location.href = 'user_Manage_Account.html';
+});
+ // Get the button element by its ID
+ var contactButton = document.getElementById('contactButton');
+
+// Add an event listener to the button
+contactButton.addEventListener('click', function() {
+  // Redirect to the contact_info.html page
+  window.location.href = 'contact_info.html';
 });
     </script>
     <script src="script.js"></script>
