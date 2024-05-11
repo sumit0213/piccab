@@ -13,9 +13,19 @@
             font-family: Arial, sans-serif;
         }
 
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+
         .login-container {
             max-width: 400px;
-            margin: 100px auto;
+            margin: 0 auto;
             padding: 20px;
             background-color: #f0f5ef;
             border-radius: 8px;
@@ -91,6 +101,11 @@
 </head>
 <body>
 
+    <!-- Display company logo above the sign-in form -->
+    <div class="logo-container">
+        <img src="PICCAB_LOGO.JPEG" alt="Company Logo">
+    </div>
+
     <div class="login-container">
         <h2>Driver Login</h2>
         <form id="loginForm">
@@ -114,7 +129,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="signin_config.js"></script>
-
     <script>
          
     //      var firebaseConfig= {
