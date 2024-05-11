@@ -135,6 +135,14 @@ firebase.initializeApp(firebaseConfig);
 // Get a reference to the Firebase auth service
 const auth = firebase.auth();
 
+// Check if the user is already logged in
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        // Redirect to Home.html if user is already logged in
+        window.location.href = 'Home.html';
+    }
+});
+
 // Add login event listener
 document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
