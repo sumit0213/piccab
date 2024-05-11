@@ -42,7 +42,7 @@ function initializeMap() {
         // Request location permission
         // Display a loading indicator while waiting for location permission
         showLoadingIndicator();
-        document.getElementById('userName').innerText = localStorage.getItem('username');
+        document.getElementById('user_name').innerText = localStorage.getItem('user_name');
         // Request location permission
 
     } else {

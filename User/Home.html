@@ -22,7 +22,7 @@
                 </div>
                 <div class="logo">
                     <i class="fas fa-user-circle"></i>
-                    <span id="userName"></span>
+                    <span id="user_name"></span>
                     <h1>PICCAB</h1>
                 </div>
                 <div class="menu-items">
@@ -130,6 +130,10 @@
                 console.error('An error occurred while signing out:', error);
             });
         }
+        // Function to handle button click event
+document.getElementById('manageAccountBtn').addEventListener('click', () => {
+    window.location.href = 'user_Manage_Account.html';
+});
     </script>
     <script src="script.js"></script>
     <script src="firebase-config.js"></script>
