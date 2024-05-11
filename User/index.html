@@ -4,139 +4,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urban Ride</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <title>User Login</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            background-color: #fefefe; /* Blue background */
+            font-family: Arial, sans-serif;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #f0f5ef; /* Dark blue form background */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #000000; /* White text */
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #000000; /* Light gray text */
+            text-align: left;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #53e636;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #0f390b;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .options {
+            margin-top: 20px;
+        }
+
+        .options a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .options a:hover {
+            text-decoration: underline;
+        }
+
+        .options button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .options button:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- burger menu -->
-    <nav>
-        <div class="navbar">
-            <div class="container nav-container">
-                <input class="checkbox" type="checkbox" name="" id="" />
-                <div class="hamburger-lines">
-                    <span class="bar bar1"></span>
-                    <span class="bar bar2"></span>
-                    <span class="bar bar3"></span>
-                </div>
-                <div class="logo">
-                    <i class="fas fa-user-circle"></i>
-                    <span id="userName"></span>
-                    <h1>URBAN RIDE</h1>
-                </div>
-                <div class="menu-items">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Topics</a></li>
-                    <li><a href="#">Ride History</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#" id="manageAccountBtn">Manage Account</a></li>
-                    <li><a href="#" id="signOutBtn" onclick="signOut()">Sign Out</a></li>
-                </div>
-            </div>
-        </div>
-    </nav>
 
+    <div class="login-container">
+        <h2>User Login</h2>
+        <form id="loginForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
-    <!-- Form container with blue background -->
-    <div class="form-container" style="background-color: #fff;">
-        <label for="location1" style="color: #000000; font-weight: bold;">Pickup Location:</label>
-        <i class='fas fa-map-marker-alt' style='font-size:24px;color:#3498db'></i>
-        <input type="text" id="location1" placeholder="Type location..." autocomplete="off">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
 
-        <label for="location2" style="color: #000000; font-weight: bold;">Enter Drop Location:</label>
-        <i class='fas fa-male' style='font-size:24px;color:#3498db'></i>
-        <input type="text" id="location2" placeholder="Type location..." autocomplete="off">
-        <div class="transportation-buttons">
-            <!-- <button class="transportation-button" onclick="calculatePrice('CAR')" data-type="CAR"><i
-                    class="fas fa-car fa-2x"></i> CAR</button> -->
-            <button class="transportation-button small-button" onclick="calculatePrice('CAR')" data-type="CAR">
-                <img src="car.png" alt="Car Image"> CAR
-            </button>
-        
-            <!-- <button class="transportation-button" onclick="calculatePrice('SUV')" data-type="SUV"><i
-                    class="fas fa-truck-pickup fa-2x"></i> SUV</button> -->
-            <button class="transportation-button small-button" onclick="calculatePrice('SUV')" data-type="SUV">
-                <img src="suv.png" alt="SUV Image"> SUV
-            </button>
-        
-            <!-- <button class="transportation-button" onclick="calculatePrice('BIKE')" data-type="BIKE"><i
-                    class="fas fa-motorcycle fa-2x"></i> AUTO</button> -->
-            <button class="transportation-button small-button" onclick="calculatePrice('AUTO')" data-type="AUTO">
-                <img src="tuk-tuk.png" alt="Auto Image"> AUTO
-            </button>
-        
-            <!-- <button class="transportation-button" onclick="calculatePrice('INTER CITY')" data-type="INTER CITY"><i
-                    class="fas fa-bus fa-2x"></i> INTER CITY</button> -->
-            <button class="transportation-button small-button" onclick="calculatePrice('INTER CITY')" data-type="INTER CITY">
-                <img src="route.png" alt="Route Image"> INTER CITY
-            </button>
+            <button type="submit">Login</button>
+        </form>
+        <div class="options">
+            <a href="#" id="forgotPassword">Forgot Password?</a>
+            <span>|</span>
+            <a href="user_signup.html" id="signup">Sign Up</a> <!-- Redirects to user signup page -->
+            <span>|</span>
         </div>
-        
-        <div class="result-container" id="result"></div>
-        <div><label for="Distance"></label>
-            <label for="Duration"></label>
-            <label for="Market Price:"></label>
-        </div>
-
-        <!-- New input field below transportation buttons -->
-        <div class="input-container">
-            <input type="text" id="expected-fare" placeholder="Enter expected fare..." autocomplete="off">
-            <button id="find-driver-button" onclick="checkExpectedFare()">Find Driver</button>
-        </div>
-        <div class="map-container" id="map"></div>
+        <div id="accountName">Not logged in</div>
     </div>
 
-
-    <!-- Include Google Maps API script without the callback parameter -->
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_OF-GCSb49quE1Jbs9vA7_cotXjQaPpk&libraries=places"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="firebase-config_signin.js"></script>
+
     <script>
-        // Request location permission immediately
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    // Permission granted, proceed with loading the rest of the page
-                    loadPage(position.coords.latitude, position.coords.longitude);
-                },
-                function (error) {
-                    // Permission denied or error handling
-                    handleGeolocationError(error);
-                }
-            );
-        } else {
-            // Geolocation not supported by the browser
-            alert('Error: Your browser doesn\'t support geolocation.');
-        }
+      // Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyD_OF-GCSb49quE1Jbs9vA7_cotXjQaPpk",
+    authDomain: "urban-cab-2-96e07.firebaseapp.com",
+    databaseURL: "https://urban-cab-2-96e07-default-rtdb.firebaseio.com",
+    projectId: "urban-cab-2-96e07",
+    storageBucket: "urban-cab-2-96e07.appspot.com",
+    messagingSenderId: "655633876241",
+    appId: "1:655633876241:web:e0db94634c06e34dcef8b0",
+    measurementId: "G-CW48Z88FY3"
+};
 
-        // Function to load the rest of the page
-        function loadPage(latitude, longitude) {
-            // ... Your existing script content ...
-        }
+firebase.initializeApp(firebaseConfig);
 
-        // Function to sign out the user
-        function signOut() {
-            firebase.auth().signOut().then(function () {
-                // Sign-out successful.
-                console.log('User signed out successfully.');
-                // Close the current window/tab and redirect to User_signin.html
-                window.location.href = 'User_signin.html';
-            }).catch(function (error) {
-                // An error happened.
-                console.error('An error occurred while signing out:', error);
-            });
-        }
+// Get a reference to the Firebase auth service
+const auth = firebase.auth();
+
+// Add login event listener
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // Sign in with email and password
+    auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Signed in successfully
+            const user = userCredential.user;
+            const userEmail = user.email;
+            console.log("Logged in as:", userEmail);
+            localStorage.setItem('username', userEmail);
+            // Redirect to Home.html
+            window.location.href = 'Home.html';
+        })
+        .catch((error) => {
+            // Handle login errors
+            console.error("Error signing in:", error.message);
+            alert(error.message); // Display error message to user
+        });
+});
+
+// Function to validate email format
+function validateEmail(email) {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}
+
+// Forgot password functionality
+const forgotPasswordLink = document.getElementById('forgotPassword');
+forgotPasswordLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    var email = document.getElementById('email').value;
+    // Validate email format
+    if (!validateEmail(email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+
+    // Send password reset email
+    auth.sendPasswordResetEmail(email)
+        .then(function() {
+            // Password reset email sent
+            alert('Password reset email sent. Check your inbox.');
+        })
+        .catch(function(error) {
+            // Error sending password reset email
+            console.error(error);
+            alert('Error sending password reset email.');
+        });
+});
     </script>
-    <script src="script.js"></script>
-    <script src="firebase-config.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-        crossorigin="anonymous"></script>
-
 
 </body>
 

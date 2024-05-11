@@ -163,6 +163,17 @@
             const country = document.getElementById('country').value;
             const phone = document.getElementById('phone').value;
             // You can add your Firebase signup logic here
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed up successfully
+                    // You can add additional user data to Firestore or Realtime Database
+                    // Redirect to index.html
+                    window.location.href = 'index.html';
+                })
+                .catch((error) => {
+                    // Handle errors
+                    console.error('Error signing up:', error.message);
+                });
         });
     </script>
 </body>

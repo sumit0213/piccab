@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Ride</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- burger menu -->
+    <nav>
+        <div class="navbar">
+            <div class="container nav-container">
+                <input class="checkbox" type="checkbox" name="" id="" />
+                <div class="hamburger-lines">
+                    <span class="bar bar1"></span>
+                    <span class="bar bar2"></span>
+                    <span class="bar bar3"></span>
+                </div>
+                <div class="logo">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="userName"></span>
+                    <h1>URBAN RIDE</h1>
+                </div>
+                <div class="menu-items">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Topics</a></li>
+                    <li><a href="#">Ride History</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#" id="manageAccountBtn">Manage Account</a></li>
+                    <li><a href="#" id="signOutBtn" onclick="signOut()">Sign Out</a></li>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Form container with blue background -->
+    <div class="form-container" style="background-color: #fff;">
+        <label for="location1" style="color: #000000; font-weight: bold;">Pickup Location:</label>
+        <i class='fas fa-map-marker-alt' style='font-size:24px;color:#3498db'></i>
+        <input type="text" id="location1" placeholder="Type location..." autocomplete="off">
+
+        <label for="location2" style="color: #000000; font-weight: bold;">Enter Drop Location:</label>
+        <i class='fas fa-male' style='font-size:24px;color:#3498db'></i>
+        <input type="text" id="location2" placeholder="Type location..." autocomplete="off">
+        <div class="transportation-buttons">
+            <!-- <button class="transportation-button" onclick="calculatePrice('CAR')" data-type="CAR"><i
+                    class="fas fa-car fa-2x"></i> CAR</button> -->
+            <button class="transportation-button small-button" onclick="calculatePrice('CAR')" data-type="CAR">
+                <img src="car.png" alt="Car Image"> CAR
+            </button>
+        
+            <!-- <button class="transportation-button" onclick="calculatePrice('SUV')" data-type="SUV"><i
+                    class="fas fa-truck-pickup fa-2x"></i> SUV</button> -->
+            <button class="transportation-button small-button" onclick="calculatePrice('SUV')" data-type="SUV">
+                <img src="suv.png" alt="SUV Image"> SUV
+            </button>
+        
+            <!-- <button class="transportation-button" onclick="calculatePrice('BIKE')" data-type="BIKE"><i
+                    class="fas fa-motorcycle fa-2x"></i> AUTO</button> -->
+            <button class="transportation-button small-button" onclick="calculatePrice('AUTO')" data-type="AUTO">
+                <img src="tuk-tuk.png" alt="Auto Image"> AUTO
+            </button>
+        
+            <!-- <button class="transportation-button" onclick="calculatePrice('INTER CITY')" data-type="INTER CITY"><i
+                    class="fas fa-bus fa-2x"></i> INTER CITY</button> -->
+            <button class="transportation-button small-button" onclick="calculatePrice('INTER CITY')" data-type="INTER CITY">
+                <img src="route.png" alt="Route Image"> INTER CITY
+            </button>
+        </div>
+        
+        <div class="result-container" id="result"></div>
+        <div><label for="Distance"></label>
+            <label for="Duration"></label>
+            <label for="Market Price:"></label>
+        </div>
+
+        <!-- New input field below transportation buttons -->
+        <div class="input-container">
+            <input type="text" id="expected-fare" placeholder="Enter expected fare..." autocomplete="off">
+            <button id="find-driver-button" onclick="checkExpectedFare()">Find Driver</button>
+        </div>
+        <div class="map-container" id="map"></div>
+    </div>
+
+
+    <!-- Include Google Maps API script without the callback parameter -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_OF-GCSb49quE1Jbs9vA7_cotXjQaPpk&libraries=places"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // Request location permission immediately
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    // Permission granted, proceed with loading the rest of the page
+                    loadPage(position.coords.latitude, position.coords.longitude);
+                },
+                function (error) {
+                    // Permission denied or error handling
+                    handleGeolocationError(error);
+                }
+            );
+        } else {
+            // Geolocation not supported by the browser
+            alert('Error: Your browser doesn\'t support geolocation.');
+        }
+
+        // Function to load the rest of the page
+        function loadPage(latitude, longitude) {
+            // ... Your existing script content ...
+        }
+
+        // Function to sign out the user
+        function signOut() {
+            firebase.auth().signOut().then(function () {
+                // Sign-out successful.
+                console.log('User signed out successfully.');
+                // Close the current window/tab and redirect to User_signin.html
+                window.location.href = 'index.html';
+            }).catch(function (error) {
+                // An error happened.
+                console.error('An error occurred while signing out:', error);
+            });
+        }
+    </script>
+    <script src="script.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
