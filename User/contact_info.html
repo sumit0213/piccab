@@ -26,9 +26,9 @@
             margin-bottom: 30px;
         }
         ul {
-            padding: 0;
-            margin: 0;
-            list-style: none;
+    padding: 0;
+    margin: 0;
+    list-style: none;
         }
         li {
             margin-bottom: 15px;
@@ -36,6 +36,7 @@
         label {
             font-weight: bold;
         }
+
         .complain-portal,
         .carrier-info {
             display: none;
@@ -89,29 +90,53 @@
             border-radius: 5px;
             box-sizing: border-box;
         }
+        #map {
+            height: 300px; /* Adjust height as needed */
+            margin-bottom: 20px;
+        }
+        .container_aboutus {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        .blink {
+            animation: blink-animation 2s infinite;
+            color: green;
+        }
+        @keyframes blink-animation {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Contact Information</h1>
-        <ul>
-            <li>
-                <label>Name:</label> John Doe
-            </li>
-            <li>
-                <label>Email:</label> john.doe@example.com
-            </li>
-            <li>
-                <label>Phone:</label> +1 (555) 123-4567
-            </li>
-            <li>
-                <label>Address:</label> 123 Main Street, City, Country
-            </li>
-        </ul>
+<ul>
+    <li><label>PICCAB SUPPORT:</label></li>
+    <li><label>Email:</label> info@piccab.com</li>
+    <li><label>Phone:</label> We will add support number on the launching date.</li>
+    <li><label>Address:</label> Manayata Tech Park, Nagavara, Bengaluru, Karnataka 560045 </li>
+</ul>
+
+
+        <!-- Google Maps -->
+        
 
         <div class="tab-buttons">
             <button class="switch-type" onclick="toggleTab('complain')">Complaint Portal</button>
-            <button class="switch-type" onclick="toggleTab('carrier')">Carrier Information</button>
+            <button class="switch-type" onclick="toggleTab('carrier')">About Us</button>
         </div>
 
         <div class="complain-portal active">
@@ -122,20 +147,39 @@
         </div>
 
         <div class="carrier-info">
-            <h2>Carrier Information</h2>
-            <ul>
-                <li>
-                    <label>Carrier Name:</label> XYZ Shipping
-                </li>
-                <li>
-                    <label>Carrier Contact:</label> +1 (555) 987-6543
-                </li>
-                <li>
-                    <label>Carrier Email:</label> info@xyzshipping.com
-                </li>
-            </ul>
+            <h2>About Us</h2>
+            <div class="container_aboutus">
+                <h1>Welcome to PICCAB</h1>
+                <p>Your solution provider for fair and equitable rides for both drivers and users.</p>
+                
+                <h2>About PICCAB</h2>
+                <p>At PICCAB, we believe in empowering both drivers and users by enabling them to determine the right fare for their journeys. Upon entering their pickup and drop-off locations, users are presented with the expected fare based on market rates. Subsequently, they broadcast this offer to nearby drivers, who then respond with their counteroffers. Users have the freedom to select the best offer from the received counteroffers.</p>
+                
+                <p>Our primary goal is to minimize discrepancies in fare estimation, ensuring that both users and drivers can transact with confidence. By facilitating transparent communication and negotiation, we strive to create a platform where fair pricing is the norm.</p>
+                
+                <h2>Payment Model</h2>
+                <p>In terms of payment, we operate on a subscription-based model for drivers. For a nominal daily fee, drivers gain access to unlimited ride requests, empowering them to maximize their earnings potential. It's important to note that PICCAB does not intervene in the fare negotiation process; transactions occur directly between drivers and users.</p>
+                <p><strong><span class="blink">Currently we are offering free service</span></strong></p>
+        
+                <h2>Current Status</h2>
+                <p>Currently, our app is in its beta version, available in select towns across India. Our focus is on understanding the unique challenges faced by drivers and users in these areas, allowing us to continually refine and improve our service.</p>
+                
+                <p>Your feedback, suggestions, and complaints are invaluable to us as we strive to enhance our platform and better serve your needs. Thank you for choosing PICCAB. Let's embark on a journey towards fair and transparent rides together.</p>
+            </div>
         </div>
+        
+        <div class="social-media">
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+        </div>
+        
     </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    
 
     <script>
         function toggleTab(tabName) {
@@ -150,6 +194,19 @@
                 document.querySelector('.carrier-info').classList.add('active');
             }
         }
+    </script>
+
+    <!-- Google Maps JavaScript -->
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644}, // Adjust coordinates as needed
+                zoom: 8 // Adjust zoom level as needed
+            });
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
     </script>
 </body>
 </html>

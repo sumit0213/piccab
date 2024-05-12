@@ -1,9 +1,10 @@
 
 // Retrieve email from local storage and display it in userName
 document.addEventListener("DOMContentLoaded", function (event) {
-    const userEmail = localStorage.getItem("userEmail");
+    const userEmail = localStorage.getItem("username");
     if (userEmail) {
         document.getElementById("userName").textContent = userEmail;
+        initMap();
     }
 
 });
@@ -435,8 +436,41 @@ function blurAndShowConfirmMessage() {
             cancelRideButton.classList.add('button', 'button-secondary', 'standard-button');
             cancelRideButton.addEventListener('click', function () {
                 // Add your logic to cancel the ride here
+                // Remove all elements from the page
+    document.body.innerHTML = '';
+
+    // Create a container for the cancellation message
+    var cancelContainer = document.createElement('div');
+    cancelContainer.className = 'cancellation-container'; // Apply CSS class
+    cancelContainer.style.position = 'fixed';
+    cancelContainer.style.top = '50%';
+    cancelContainer.style.left = '50%';
+    cancelContainer.style.transform = 'translate(-50%, -50%)';
+    cancelContainer.style.zIndex = '9999'; // Ensure it's above other elements
+
+    // Show the cancellation message inside the container
+    var cancelMessage = document.createElement('p');
+    cancelMessage.textContent = 'Booking Cancelled!';
+    cancelMessage.className = 'cancel-message'; // Apply CSS class
+    cancelContainer.appendChild(cancelMessage);
+
+    // Append the container to the document body
+    document.body.appendChild(cancelContainer);
+
+    console.log('Booking cancelled.');
+                 // Update the status in the database to "cancelled"
+            var database = firebase.database();
+            var fareRef = database.ref('fares/' + fairID); // Assuming fairID is accessible here
+            
+            fareRef.update({
+                status: 'cancelled'
+            })
+            .then(() => console.log('Ride status updated to "cancelled" in the database'))
+            .catch(error => console.error('Error updating ride status:', error));
+            
                 console.log('Ride cancelled.');
-                // You can perform further actions like updating database, etc.
+
+
             });
             confirmContainer.appendChild(cancelRideButton);
 
@@ -558,15 +592,12 @@ function getRide() {
 
     // Check if the toggle switch is turned on
     var toggleSwitch = document.getElementById('myonoffswitch');
-    if (!toggleSwitch.checked) {
+    if (toggleSwitch.checked) {
         // If toggle switch is off, clear the ride-details-list and return
         if (rideDetailsList) {
             rideDetailsList.innerHTML = ''; // Clear the list
         }
-        return;
-    }
-
-    // Set up a listener for any changes in the 'userDetails' node
+            // Set up a listener for any changes in the 'userDetails' node
     userDetailsRef.on('value', function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
             var userKey = childSnapshot.key;
@@ -579,6 +610,21 @@ function getRide() {
             }
 
             // Check if vehicleType matches userDetail.mode
+            const email = localStorage.getItem("username");
+            const cabDetailsRef = database.ref(`Account_Driver_detail/${email.replace(".", ",")}/cabdetail`);
+            cabDetailsRef.once('value')
+                .then((snapshot) => {
+                    console.log("Snapshot:", snapshot.val()); // Logging snapshot value
+                    const cabDetails = snapshot.val(); // Store the snapshot value in a variable
+                    
+        if (cabDetails != null && cabDetails.vehicleType) {
+            const vehicleType = cabDetails.vehicleType; // Store vehicleType from cabDetails
+            console.log("Vehicle Type:", vehicleType); // Logging vehicleType value
+            localStorage.setItem('vehicleType', vehicleType);
+        }
+    })
+
+
             var vehicleType = localStorage.getItem('vehicleType');
             // if (vehicleType && userDetail.mode === vehicleType) {
 
@@ -610,6 +656,13 @@ function getRide() {
         console.error('Error getting user details:', error);
         displayNoDriversMessage(); // Consider updating message
     });
+        return;
+    }
+    else{
+        document.getElementById('ride-details-list').innerHTML = ''; // Clear the list
+    }
+
+
 }
 
 

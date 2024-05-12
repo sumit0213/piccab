@@ -22,7 +22,7 @@
                 </div>
                 <div class="logo">
                     <i class="fas fa-user-circle"></i>
-                    <span id="user_name"></span>
+                    <span id="userName"></span>
                     <h1>PICCAB</h1>
                 </div>
                 <div class="menu-items">
@@ -115,7 +115,10 @@
 
         // Function to load the rest of the page
         function loadPage(latitude, longitude) {
-            // ... Your existing script content ...
+            const userEmail = localStorage.getItem("username");
+            if (userEmail) {
+        document.getElementById("userName").textContent = userEmail;
+    }
         }
 
         // Function to sign out the user

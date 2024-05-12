@@ -23,6 +23,7 @@ let global_driverDetails = {
     timestamp: null 
 };
 let loggedinuseremail;
+let uniqueNodeId ;
 
 function initializeMap() {
     // Check if geolocation is supported by the browser
@@ -42,7 +43,7 @@ function initializeMap() {
         // Request location permission
         // Display a loading indicator while waiting for location permission
         showLoadingIndicator();
-        document.getElementById('user_name').innerText = localStorage.getItem('user_name');
+        document.getElementById('userName').innerText = localStorage.getItem('userEmail');
         // Request location permission
 
     } else {
@@ -561,6 +562,10 @@ function setCurrentLocation() {
 // Ensure initializeMap is defined before it's called
 window.onload = function () {
     initializeMap();
+    const userEmail = localStorage.getItem("userEmail");
+    if (userEmail) {
+        document.getElementById("userName").textContent = userEmail;
+    }
 };
 
 // Add event listeners to location input fields
@@ -789,7 +794,7 @@ function storeDataInFirebase(data) {
         } else {
             console.log('Data stored in Firebase successfully.');
             // Capture the unique key of the newly created node
-            let uniqueNodeId = newDriverDetailsRef.key;
+             uniqueNodeId = newDriverDetailsRef.key;
             // Print the unique key in the console
             console.log('Unique Node ID:', uniqueNodeId);
             // Now, listen to changes on this newly created node
@@ -999,6 +1004,16 @@ function displayFareAddress(address, driverDetails) {
             window.removeEventListener('beforeunload', preventPageReload);
             // Restore default blur effect of the document body
             document.body.style.filter = 'none';
+            // Store data to Firebase
+    var database = firebase.database();
+        var userDetailsRef = database.ref('userDetails/' + uniqueNodeId);
+    userDetailsRef.update({
+        Ride_status: "cancelled"
+    }).then(function() {
+        console.log("Data stored to Firebase with status 'cancelled'.");
+    }).catch(function(error) {
+        console.error("Error storing data to Firebase:", error);
+    });
         }
 
         // Add event listener for cancel button click
