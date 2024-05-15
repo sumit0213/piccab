@@ -272,13 +272,40 @@ function confirmFare(userKey, enteredAmount, rideItem) {
     }
 }
 
+// function setupFirebaseListener(rideItem, fairID) {
+//     var database = firebase.database();
+
+//     // No need to extract the unique key, use fairID directly
+//     var fareMessageRef = database.ref('fares/' + fairID + '/message');
+
+//     // Define a function to handle message events
+//     function handleMessage(snapshot) {
+//         var message = snapshot.val();
+//         console.log('Current fare message:', message);
+
+//         if (message) {
+//             if (message === 'Confirm Ride') {
+//                 blurAndShowConfirmMessage(rideItem);
+//             } else if (message === 'Remove') {
+//                 // Remove rideItem when receiving "Remove" message
+//                 rideItem.remove();
+//             } else {
+//                 console.log('No actionable message received.');
+//             }
+//         } else {
+//             console.log('Message is null.');
+//         }
+//     }
+
+//     // Listen for initial value and subsequent changes
+//     fareMessageRef.on('value', handleMessage);
+// }
+
 function setupFirebaseListener(rideItem, fairID) {
     var database = firebase.database();
 
-    // No need to extract the unique key, use fairID directly
+    // Listener for fare message
     var fareMessageRef = database.ref('fares/' + fairID + '/message');
-
-    // Define a function to handle message events
     function handleMessage(snapshot) {
         var message = snapshot.val();
         console.log('Current fare message:', message);
@@ -287,7 +314,6 @@ function setupFirebaseListener(rideItem, fairID) {
             if (message === 'Confirm Ride') {
                 blurAndShowConfirmMessage(rideItem);
             } else if (message === 'Remove') {
-                // Remove rideItem when receiving "Remove" message
                 rideItem.remove();
             } else {
                 console.log('No actionable message received.');
@@ -296,12 +322,13 @@ function setupFirebaseListener(rideItem, fairID) {
             console.log('Message is null.');
         }
     }
-
-    // Listen for initial value and subsequent changes
     fareMessageRef.on('value', handleMessage);
+
 }
 
+
 function blurAndShowConfirmMessage() {
+    cancelFirebaseListener();
     // Remove all elements from the page
     document.body.innerHTML = '';
 
@@ -435,40 +462,25 @@ function blurAndShowConfirmMessage() {
             cancelRideButton.textContent = 'Cancel Ride';
             cancelRideButton.classList.add('button', 'button-secondary', 'standard-button');
             cancelRideButton.addEventListener('click', function () {
-                // Add your logic to cancel the ride here
-                // Remove all elements from the page
-    document.body.innerHTML = '';
 
-    // Create a container for the cancellation message
-    var cancelContainer = document.createElement('div');
-    cancelContainer.className = 'cancellation-container'; // Apply CSS class
-    cancelContainer.style.position = 'fixed';
-    cancelContainer.style.top = '50%';
-    cancelContainer.style.left = '50%';
-    cancelContainer.style.transform = 'translate(-50%, -50%)';
-    cancelContainer.style.zIndex = '9999'; // Ensure it's above other elements
-
-    // Show the cancellation message inside the container
-    var cancelMessage = document.createElement('p');
-    cancelMessage.textContent = 'Booking Cancelled!';
-    cancelMessage.className = 'cancel-message'; // Apply CSS class
-    cancelContainer.appendChild(cancelMessage);
-
-    // Append the container to the document body
-    document.body.appendChild(cancelContainer);
-
-    console.log('Booking cancelled.');
                  // Update the status in the database to "cancelled"
             var database = firebase.database();
             var fareRef = database.ref('fares/' + fairID); // Assuming fairID is accessible here
             
             fareRef.update({
-                status: 'cancelled'
+                Fnal_Driver_status: 'cancelled'
+            })
+                        // Store data to Firebase in user detail
+                var database = firebase.database();
+                var userDetailsRef = database.ref('userDetails/' + globalUserKey);
+            userDetailsRef.update({
+                Fnal_Driver_status: "cancelled"
             })
             .then(() => console.log('Ride status updated to "cancelled" in the database'))
             .catch(error => console.error('Error updating ride status:', error));
             
-                console.log('Ride cancelled.');
+                //console.log('Ride cancelled.');
+               
 
 
             });
@@ -493,6 +505,42 @@ function blurAndShowConfirmMessage() {
     console.log('Confirmation message displayed.');
 }
 
+// function addFirebaseListeners(fairID, globalRefId) {
+//     // Firebase initialization
+//     var database = firebase.database();
+
+//     // Reference to user details node
+//     var userDetailsRef = database.ref('userDetails/' + fairID);
+    
+//     // Reference to fare node
+//     var fareRef = database.ref('fares/' + globalRefId);
+
+//     // Add listener for changes in user details
+//     userDetailsRef.on('value', function(snapshot) {
+//         var userDetails = snapshot.val();
+//         var finalRideStatus = userDetails.Final_Ride_status;
+//         var finalDriverStatus = userDetails.Final_Driver_status;
+
+//         // Check if both statuses are 'cancelled'
+//         if (finalRideStatus === 'cancelled' && finalDriverStatus === 'cancelled') {
+//             console.log('Hello');
+//         }
+//     });
+
+//     // Add listener for changes in fare
+//     fareRef.on('value', function(snapshot) {
+//         var fareDetails = snapshot.val();
+//         var finalRideStatus = fareDetails.Final_Ride_status;
+//         var finalDriverStatus = fareDetails.Final_Driver_status;
+
+//         // Check if both statuses are 'cancelled'
+//         if (finalRideStatus === 'cancelled' && finalDriverStatus === 'cancelled') {
+//             console.log('Hello');
+//         }
+//     });
+// }
+
+
 
 
 // Function to create and simulate click on decline button
@@ -506,6 +554,10 @@ function callDeclineButton(userKey) {
 function declineRide(driverKey) {
     console.log('Ride declined for driverKey:', driverKey);
     // Further logic to handle the ride decline
+    var userDetailsRef = database.ref('userDetails/' + driverKey);
+    userDetailsRef.update({
+        'button_status': 'Decline' // Updating status to 'timeout'
+    });
     var rideItem = document.getElementById(`ride-item-${driverKey}`);
     if (rideItem) {
         rideItem.parentNode.removeChild(rideItem);
@@ -604,7 +656,7 @@ function getRide() {
             var userDetail = childSnapshot.val();
 
             // Check if 'timeout' message is available in user's details
-            if (userDetail.status === 'timeout' || userDetail.Driver_status === 'Confirm') {
+            if (userDetail.status === 'timeout' || userDetail.Driver_status === 'Confirm' || userDetail.button_status === 'Decline') {
                 // If 'timeout' message is available, skip this user and continue to next
                 return; // Skip to next iteration
             }
@@ -684,7 +736,50 @@ function handleConfirmMessage(userKey) {
 }
 
 
+var isCancellationMessageDisplayed = false;
 
+function cancelFirebaseListener() {
+    // Listener for fare status
+    var fareStatusRef = database.ref('userDetails/' + globalUserKey);
+
+    function handleFareStatus(snapshot) {
+        var fareStatus = snapshot.val();
+        if (fareStatus) {
+            if (fareStatus.Fnal_Driver_status === 'cancelled') {
+                displayCancellationMessage('By Driver..');
+            } else if (fareStatus.Final_Ride_status === 'cancelled') {
+                displayCancellationMessage('By Rider..');
+            }
+        }
+    }
+
+    function displayCancellationMessage(whoCanceled) {
+        if (!isCancellationMessageDisplayed) {
+            // Creating a div element to hold the message
+            // Remove all existing elements from the screen
+        document.body.innerHTML = '';
+
+            var cancellationDiv = document.createElement('div');
+            cancellationDiv.classList.add('unique-container');
+
+            // HTML code for cancellation message
+            cancellationDiv.innerHTML = `
+                <div class="unique-message-box">
+                    <h2>Booking Canceled</h2>
+                    <h3>${whoCanceled}</h3>
+                    <p>We apologize for the inconvenience caused.</p>
+                </div>
+            `;
+
+            // Appending the message to the body
+            document.body.appendChild(cancellationDiv);
+
+            isCancellationMessageDisplayed = true;
+        }
+    }
+
+    fareStatusRef.on('value', handleFareStatus);
+}
 
 // Set up ride interval
 // var intervalTime = 60000; // 1 minute

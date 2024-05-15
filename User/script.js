@@ -24,6 +24,7 @@ let global_driverDetails = {
 };
 let loggedinuseremail;
 let uniqueNodeId ;
+let globalRefId;
 
 function initializeMap() {
     // Check if geolocation is supported by the browser
@@ -864,6 +865,8 @@ function showSearchingMessage(cancelCallback, fareDataList) {
         // Dynamically display each fare data if available
         fareDataList.forEach(fareData => {
             if (fareData && fareData.enteredAmount && fareData.address && fareData.refId) {
+                // Store the refId value in the global variable
+                globalRefId = fareData.refId;
                 let fareDetailsContainer = document.createElement('div');
                 fareDetailsContainer.className = 'fare-details-container';
                 fareDetailsContainer.innerHTML = `
@@ -941,6 +944,7 @@ function saveAndRedirect(fareData, message) {
 //     document.body.appendChild(fareAddressDiv);
 // }
 function displayFareAddress(address, driverDetails) {
+    cancelFirebaseListener();
     console.log(global_driverDetails);
     let fareAddressDiv = document.createElement('div');
     fareAddressDiv.id = 'fareAddress_id';
@@ -1005,11 +1009,20 @@ function displayFareAddress(address, driverDetails) {
             // Restore default blur effect of the document body
             document.body.style.filter = 'none';
             // Store data to Firebase
-    var database = firebase.database();
-        var userDetailsRef = database.ref('userDetails/' + uniqueNodeId);
-    userDetailsRef.update({
-        Ride_status: "cancelled"
-    }).then(function() {
+            var database = firebase.database();
+            var userDetailsRef = database.ref('userDetails/' + uniqueNodeId);
+            userDetailsRef.update({
+            Final_Ride_status: "cancelled"
+            })
+    
+            // Update the status in the database to "cancelled"
+            var database = firebase.database();
+            var fareRef = database.ref('fares/' + globalRefId); // Assuming fairID is accessible here
+            fareRef.update({
+            Final_Ride_status: 'cancelled'
+            })
+    
+    .then(function() {
         console.log("Data stored to Firebase with status 'cancelled'.");
     }).catch(function(error) {
         console.error("Error storing data to Firebase:", error);
@@ -1025,12 +1038,95 @@ function displayFareAddress(address, driverDetails) {
         // Assign the content of fareAddressDiv.innerHTML to rideHistory
         rideHistory = fareAddressDiv.innerHTML;
     }
+    //addFirebaseListeners(uniqueNodeId, globalRefId);
 
     // Now you can use the rideHistory variable to access the saved content
     console.log('Ride history:', rideHistory);
 
     document.body.appendChild(fareAddressDiv);
 }
+
+var isCancellationMessageDisplayed = false;
+
+function cancelFirebaseListener() {
+    // Listener for fare status
+    var fareStatusRef = database.ref('fares/' + globalRefId);
+
+    function handleFareStatus(snapshot) {
+        var fareStatus = snapshot.val();
+        if (fareStatus) {
+            if (fareStatus.Fnal_Driver_status === 'cancelled') {
+                displayCancellationMessage('By Driver..');
+            } else if (fareStatus.Final_Ride_status === 'cancelled') {
+                displayCancellationMessage('By Rider..');
+            }
+        }
+    }
+
+    function displayCancellationMessage(whoCanceled) {
+        if (!isCancellationMessageDisplayed) {
+            // Creating a div element to hold the message
+            // Remove all existing elements from the screen
+        document.body.innerHTML = '';
+
+            var cancellationDiv = document.createElement('div');
+            cancellationDiv.classList.add('unique-container');
+
+            // HTML code for cancellation message
+            cancellationDiv.innerHTML = `
+                <div class="unique-message-box">
+                    <h2>Booking Canceled</h2>
+                    <h3>${whoCanceled}</h3>
+                    <p>We apologize for the inconvenience caused.</p>
+                </div>
+            `;
+
+            // Appending the message to the body
+            document.body.appendChild(cancellationDiv);
+
+            isCancellationMessageDisplayed = true;
+        }
+    }
+
+    fareStatusRef.on('value', handleFareStatus);
+}
+
+
+// function addFirebaseListeners(uniqueNodeId, globalRefId) {
+//     // Firebase initialization
+//     var database = firebase.database();
+
+//     // Reference to user details node
+//     var userDetailsRef = database.ref('userDetails/' + uniqueNodeId);
+    
+//     // Reference to fare node
+//     var fareRef = database.ref('fares/' + globalRefId);
+
+//     // Add listener for changes in user details
+//     userDetailsRef.on('value', function(snapshot) {
+//         var userDetails = snapshot.val();
+//         var finalRideStatus = userDetailsRef.Final_Ride_status;
+//         var finalDriverStatus = userDetailsRef.Final_Driver_status;
+
+//         // Check if both statuses are 'cancelled'
+//         if (finalRideStatus === 'cancelled' && finalDriverStatus === 'cancelled') {
+//             console.log('Hello');
+//         }
+//     });
+
+//     // Add listener for changes in fare
+//     fareRef.on('value', function(snapshot) {
+//         var fareDetails = snapshot.val();
+//         var finalRideStatus = fareRef.Final_Ride_status;
+//         var finalDriverStatus = fareRef.Final_Driver_status;
+
+//         // Check if both statuses are 'cancelled'
+//         if (finalRideStatus === 'cancelled' && finalDriverStatus === 'cancelled') {
+//             console.log('Hello');
+//         }
+//     });
+// }
+
 
 
 
