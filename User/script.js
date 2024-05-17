@@ -25,6 +25,18 @@ let global_driverDetails = {
 let loggedinuseremail;
 let uniqueNodeId ;
 let globalRefId;
+// Declare variables for currentLocation and secondLocation globally
+let currentLocation = {
+    address: '',
+    latitude: null,
+    longitude: null,
+};
+
+let secondLocation = {
+    address: '',
+    latitude: null,
+    longitude: null,
+};
 
 function initializeMap() {
     // Check if geolocation is supported by the browser
@@ -711,6 +723,7 @@ function handleLocationChange() {
     }
 }
 
+// Update the 'checkExpectedFare' function to populate currentLocation and secondLocation
 function checkExpectedFare() {
     let expectedFareInput = document.getElementById('expected-fare');
 
@@ -733,21 +746,11 @@ function checkExpectedFare() {
         if (enteredFare >= lowerBound && enteredFare <= upperBound) {
             showSearchingMessage();
 
-
             let currentLocationInput = document.getElementById('location1');
             let secondLocationInput = document.getElementById('location2');
 
-            let currentLocation = {
-                address: currentLocationInput.value,
-                latitude: null,
-                longitude: null,
-            };
-
-            let secondLocation = {
-                address: secondLocationInput.value,
-                latitude: null,
-                longitude: null,
-            };
+            currentLocation.address = currentLocationInput.value;
+            secondLocation.address = secondLocationInput.value;
 
             geocodeLocation(geocoder, currentLocationInput.value, function (origin) {
                 currentLocation.latitude = origin.lat();
@@ -756,9 +759,9 @@ function checkExpectedFare() {
                 geocodeLocation(geocoder, secondLocationInput.value, function (destination) {
                     secondLocation.latitude = destination.lat();
                     secondLocation.longitude = destination.lng();
+                    
                     // Format the current date and time in IST timezone
                     let currentDateTimeIST = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-
 
                     let driverDetails = {
                         distance: distance,
@@ -769,13 +772,13 @@ function checkExpectedFare() {
                         currentLocation: currentLocation,
                         secondLocation: secondLocation,
                         timestamp: currentDateTimeIST  // Storing the IST formatted timestamp
-
                     };
                     global_driverDetails = driverDetails;
                     // Push data to Firebase
                     storeDataInFirebase(driverDetails);
 
-                    
+                    // Trigger the click event on the showMapButton after updating the driver details
+                    showMapButton.click();
                 });
             });
         } else {
@@ -948,7 +951,7 @@ function displayFareAddress(address, driverDetails) {
     console.log(global_driverDetails);
     let fareAddressDiv = document.createElement('div');
     fareAddressDiv.id = 'fareAddress_id';
-    fareAddressDiv.className = 'confirmation-container'; // Apply CSS class
+    fareAddressDiv.className = 'fare-address-container'; // Apply CSS class
     fareAddressDiv.style.position = 'fixed';
     fareAddressDiv.style.top = '50%';
     fareAddressDiv.style.left = '50%';
@@ -982,18 +985,66 @@ function displayFareAddress(address, driverDetails) {
     // Check if driverDetails is defined
     if (driverDetails) {
         fareAddressDiv.innerHTML = `
-        <div><p class="confirm-message">Booking Confirmed!</p>
-        <p class="data-property">Driver's Address: ${global_driverDetails.currentLocation.address}</p>
-        <p class="data-property">Distance: ${global_driverDetails.distance}</p>
-        <p class="data-property">Duration: ${global_driverDetails.duration}</p>
-        <p class="data-property">Mode: ${global_driverDetails.mode}</p>
-        <p class="data-property">Price: ${global_driverDetails.price}</p>
-        <p class="data-property">Expected Fare: ${global_driverDetails.expectedFare}</p>
-        <p class="data-property">Timestamp: ${global_driverDetails.timestamp}</p>
-        <button class="button button-primary confirm-button">Show on Google Maps</button>
-        <button class="button button-secondary remove-button">Cancel Ride</button>
-        </div>
-    `;
+            <div>
+                <p class="fare-address-message">Booking Confirmed!</p>
+                <p class="fare-address-property fare-address-bold">Driver's Current Location : ${global_driverDetails.currentLocation.address}</p>
+                <p class="fare-address-property fare-address-bold">Distance: ${global_driverDetails.distance}</p>
+                <p class="fare-address-property fare-address-bold">Duration: ${global_driverDetails.duration}</p>
+                <p class="fare-address-property fare-address-bold">Mode: ${global_driverDetails.mode}</p>
+                <p class="fare-address-property fare-address-bold">Price: ${global_driverDetails.price}</p>
+                <p class="fare-address-property fare-address-bold">Expected Fare: ${global_driverDetails.expectedFare}</p>
+                <p class="fare-address-property fare-address-bold">Timestamp: ${global_driverDetails.timestamp}</p>
+                <p class="fare-address-property fare-address-bold">Pickup Location: ${global_driverDetails.currentLocation.address}</p>
+                <p class="fare-address-property fare-address-bold">Drop Location: ${global_driverDetails.secondLocation.address}</p>
+                <button class="fare-address-button fare-address-button-primary confirm-button">Show on Google Maps</button>
+                <button class="fare-address-button fare-address-button-secondary remove-button">Cancel Ride</button>
+            </div>
+        `;
+
+        // Add button to show location on Google Maps
+        var showMapButton = document.createElement('button');
+        showMapButton.textContent = 'Show on Google Maps';
+        showMapButton.classList.add('fare-address-button', 'fare-address-button-primary', 'confirm-button');
+
+// Update the 'showMapButton.addEventListener' to use the currentLocation and secondLocation
+showMapButton.addEventListener('click', function () {
+    // Check if the device is mobile
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    // Function to open Google Maps in the app
+    function openInMapsApp(googleMapsUrl) {
+        // Prompt the user to open in Google Maps app
+        const confirmation = confirm('Do you want to open this location in the Google Maps app?');
+
+        if (confirmation) {
+            window.location.href = googleMapsUrl;
+        } else {
+            // Open in browser if the user declines
+            window.open(googleMapsUrl, '_blank');
+        }
+    }
+
+    // Construct the Google Maps URL with the coordinates
+    if (currentLocation.latitude && currentLocation.longitude && secondLocation.latitude && secondLocation.longitude) {
+        var googleMapsUrl = 'https://www.google.com/maps/dir/?api=1';
+        googleMapsUrl += '&origin=' + currentLocation.latitude + ',' + currentLocation.longitude;
+        googleMapsUrl += '&destination=' + secondLocation.latitude + ',' + secondLocation.longitude;
+        // Call the function to create the floating button
+        createFloatingButton();
+
+        if (isMobile) {
+            // Open in the Google Maps app if it's a mobile device
+            openInMapsApp(googleMapsUrl);
+        } else {
+            // Open in browser if it's not a mobile device
+            window.open(googleMapsUrl, '_blank');
+        }
+    } else {
+        console.error('Coordinates are not available.');
+    }
+});
+
+        fareAddressDiv.querySelector('.confirm-button').replaceWith(showMapButton);
 
         // Assign the content of fareAddressDiv.innerHTML to rideHistory
         rideHistory = fareAddressDiv.innerHTML;
@@ -1012,21 +1063,18 @@ function displayFareAddress(address, driverDetails) {
             var database = firebase.database();
             var userDetailsRef = database.ref('userDetails/' + uniqueNodeId);
             userDetailsRef.update({
-            Final_Ride_status: "cancelled"
+                Final_Ride_status: "cancelled"
             })
-    
+
             // Update the status in the database to "cancelled"
-            var database = firebase.database();
-            var fareRef = database.ref('fares/' + globalRefId); // Assuming fairID is accessible here
+            var fareRef = database.ref('fares/' + globalRefId); // Assuming fareID is accessible here
             fareRef.update({
-            Final_Ride_status: 'cancelled'
-            })
-    
-    .then(function() {
-        console.log("Data stored to Firebase with status 'cancelled'.");
-    }).catch(function(error) {
-        console.error("Error storing data to Firebase:", error);
-    });
+                Final_Ride_status: 'cancelled'
+            }).then(function () {
+                console.log("Data stored to Firebase with status 'cancelled'.");
+            }).catch(function (error) {
+                console.error("Error storing data to Firebase:", error);
+            });
         }
 
         // Add event listener for cancel button click
@@ -1045,6 +1093,63 @@ function displayFareAddress(address, driverDetails) {
 
     document.body.appendChild(fareAddressDiv);
 }
+
+// Variable to hold the Google Maps window reference
+let googleMapsWindow;
+
+// Function to toggle the visibility of the Google Maps window
+function toggleMapVisibility() {
+    if (googleMapsWindow && !googleMapsWindow.closed) {
+        // If the Google Maps window is open, bring it to focus
+        googleMapsWindow.focus();
+    } else {
+        // If the Google Maps window is closed or not opened yet, open it
+        if (currentLocation.latitude && currentLocation.longitude && secondLocation.latitude && secondLocation.longitude) {
+            var googleMapsUrl = 'https://www.google.com/maps/dir/?api=1';
+            googleMapsUrl += '&origin=' + currentLocation.latitude + ',' + currentLocation.longitude;
+            googleMapsUrl += '&destination=' + secondLocation.latitude + ',' + secondLocation.longitude;
+
+            // Open Google Maps in a new window and store the reference
+            googleMapsWindow = window.open(googleMapsUrl, '_blank');
+
+            // Check if the window was successfully opened
+            if (!googleMapsWindow || googleMapsWindow.closed || typeof googleMapsWindow.closed === 'undefined') {
+                alert('Failed to open Google Maps window. Please ensure pop-ups are allowed for this website.');
+            }
+        } else {
+            console.error('Coordinates are not available.');
+        }
+    }
+}
+
+// Create the floating button
+function createFloatingButton() {
+    const button = document.createElement('button');
+    button.innerHTML = '&#9650;'; // Unicode for up arrow
+    button.style.position = 'fixed';
+    button.style.bottom = '20px';
+    button.style.right = '20px';
+    button.style.width = '40px';
+    button.style.height = '40px';
+    button.style.borderRadius = '50%';
+    button.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    button.style.color = 'white';
+    button.style.fontSize = '20px';
+    button.style.border = 'none';
+    button.style.cursor = 'pointer';
+    button.style.zIndex = '9999';
+    button.title = 'Toggle Map';
+
+    // Add event listener to toggle map visibility
+    button.addEventListener('click', toggleMapVisibility);
+
+    // Append the button to the document body
+    document.body.appendChild(button);
+}
+
+
+
+
 
 var isCancellationMessageDisplayed = false;
 

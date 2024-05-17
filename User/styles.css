@@ -353,22 +353,24 @@ input[type="text"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     z-index: 1000;
 }
 
 .message-container {
     padding: 20px;
-    background-color: #fff;
+    background-color: #f0f8ea; /* Light green background */
+    border: 2px solid #4caf50; /* Standard border */
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     text-align: center;
+    font-family: Arial, sans-serif; /* Standard font */
 }
 
 .message-header {
     margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
 }
-
 
 .fare-details-container {
     margin: 10px 0;
@@ -385,78 +387,121 @@ input[type="text"] {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.cancel-button {
+.cancel-button, .confirm-button, .remove-button {
     margin-top: 10px;
     padding: 10px 20px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: Arial, sans-serif; /* Standard font */
+}
+
+.cancel-button {
     background-color: #ff4545; /* Red */
     color: white;
-    cursor: pointer;
-    box-shadow: 0 4px #CC3636; /* Darker red for the shadow */
-    position: relative;
-    top: 0;
-    transition: top ease 0.3s, box-shadow ease 0.3s;
-}
-
-.cancel-button:hover {
-    top: -2px;
-    box-shadow: 0 6px #CC3636;
-}
-
-.cancel-button:active {
-    top: 2px;
-    box-shadow: 0 2px #CC3636;
-}
-
-.confirm-button, .remove-button {
-    margin-top: 5px;
-    padding: 5px 10px;
-    font-size: 14px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    position: relative;
-    top: 0;
-    transition: top ease 0.3s, box-shadow ease 0.3s;
-    margin-right: 5px; /* Adds space between the buttons */
+    box-shadow: 0 4px #cc3636;
 }
 
 .confirm-button {
-    background-color: #4CAF50; /* Green */
+    background-color: #4caf50; /* Green */
     color: white;
-    box-shadow: 0 4px #2C7F3B;
+    box-shadow: 0 4px #2c7f3b;
 }
 
 .remove-button {
     background-color: #f44336; /* Red */
     color: white;
-    box-shadow: 0 4px #D32F2F;
+    box-shadow: 0 4px #d32f2f;
 }
 
-.confirm-button:hover, .remove-button:hover {
-    top: -2px;
-    box-shadow: 0 6px #2C7F3B;
+.cancel-button:hover, .confirm-button:hover, .remove-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.confirm-button:active, .remove-button:active {
-    top: 2px;
-    box-shadow: 0 2px #2C7F3B;
+.cancel-button:active, .confirm-button:active, .remove-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-.confirmation-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
+/* Adjustments for spacing between buttons */
+.confirm-button, .remove-button {
+    margin-left: 10px;
+}
+
+/* Bold font for naming tab */
+.fare-details-container div:first-child {
+    font-weight: bold;
+}
+
+/* Bold font for 'Estimated Fare' and 'Address' */
+.fare-details-container span {
+    font-weight: bold;
+}
+
+/* Positioning cancel button below the container */
+.cancel-button {
+    margin-top: 20px;
+}
+
+
+ /* CSS for the fare address container */
+ .fare-address-container {
+    background-color: white;
+    border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    width: 300px; /* Adjust width as needed */
+    text-align: center;
 }
 
-.confirm-message {
-font-weight: bold;
-color: blue;
+/* CSS for the confirmation message */
+.fare-address-message {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* CSS for the data properties */
+.fare-address-property {
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+/* CSS for the buttons */
+.fare-address-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.fare-address-button-primary {
+    background-color: #007bff;
+}
+
+.fare-address-button-secondary {
+    background-color: #6c757d;
+}
+
+
+
+/* Mobile responsiveness */
+@media only screen and (max-width: 600px) {
+    .fare-address-container {
+        max-width: 100%;
+        width: 100%;
+    }
 }
 
 .data-property {

@@ -15,19 +15,7 @@ body {
     margin-top: 12px;
     margin-bottom: 12px;
 }
-.standard-button {
-    padding: 10px 20px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f0f0f0;
-    color: #2152f2;
-    cursor: pointer;
-}
 
-.standard-button:hover {
-    background-color: #e0e0e0;
-}
 
 
 .container {
@@ -302,6 +290,20 @@ button:hover {
 .confirm-message {
     font-weight: bold;
     color: blue;
+}
+
+.standard-button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #2152f2;
+    cursor: pointer;
+}
+
+.standard-button:hover {
+    background-color: #e0e0e0;
 }
 
 .data-property {
